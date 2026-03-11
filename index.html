@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CineVault — Premium Cinema</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Loading Screen -->
+  <div class="loading-screen" id="loader">
+    <div class="loading-logo">CINEVAULT</div>
+  </div>
+
+  <!-- ══ NAVBAR ══ -->
+  <nav class="navbar" id="navbar">
+    <a href="index.html" class="nav-logo">CINE<span>VAULT</span></a>
+
+    <ul class="nav-links">
+      <li><a href="#" class="active">Home</a></li>
+      <li><a href="#movies">Movies</a></li>
+      <li><a href="#featured">Featured</a></li>
+      <li><a href="#">My List</a></li>
+    </ul>
+
+    <div class="nav-actions">
+      <input class="nav-search" type="text" placeholder="Search films…" />
+      <button class="btn-signin">Sign In</button>
+    </div>
+  </nav>
+
+  <!-- ══ HERO ══ -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-noise"></div>
+
+    <div class="hero-content">
+      <span class="hero-badge">✦ Editor's Pick</span>
+      <h1 class="hero-title">The Dark<br /><span>Knight</span></h1>
+      <div class="hero-meta">
+        <span>Action</span>
+        <span class="dot"></span>
+        <span>2008</span>
+        <span class="dot"></span>
+        <span>2h 32m</span>
+        <span class="dot"></span>
+        <span>★ 9.0</span>
+      </div>
+      <p class="hero-desc">
+        When a menacing criminal mastermind known as the Joker plunges Gotham into chaos,
+        Batman must accept one of the greatest psychological and moral tests of his resolve.
+      </p>
+      <div class="hero-buttons">
+        <a href="#" class="btn-primary" id="hero-watch-btn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
+          Watch Now
+        </a>
+        <a href="#movies" class="btn-secondary">
+          Browse All Films
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ MAIN CONTENT ══ -->
+  <main class="main-content">
+
+    <!-- Category Filter -->
+    <div class="category-filter" id="filters"></div>
+
+    <!-- Featured Section -->
+    <section class="section" id="featured">
+      <div class="section-header">
+        <h2 class="section-title">Critically Acclaimed</h2>
+        <span class="section-count">6 titles</span>
+      </div>
+      <div class="featured-grid"></div>
+    </section>
+
+    <!-- All Movies Grid -->
+    <section class="section" id="movies">
+      <div class="section-header">
+        <h2 class="section-title">All Films</h2>
+        <span class="section-count">100 titles</span>
+      </div>
+      <div class="movies-grid"></div>
+    </section>
+
+  </main>
+
+  <!-- ══ FOOTER ══ -->
+  <footer>
+    <div class="footer-logo">CINE<span>VAULT</span></div>
+    <div class="footer-links">
+      <a href="#">Privacy</a>
+      <a href="#">Terms</a>
+      <a href="#">Help</a>
+      <a href="#">Contact</a>
+    </div>
+    <p class="footer-copy">© 2025 CineVault. All rights reserved.</p>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="movies.js"></script>
+  <script src="script.js"></script>
+
+  <script>
+    // Hero "Watch Now" → opens The Dark Knight directly
+    document.getElementById('hero-watch-btn').addEventListener('click', (e) => {
+      e.preventDefault();
+      const darkKnight = movies.find(m => m.name === 'The Dark Knight');
+      if (darkKnight) {
+        localStorage.setItem('selectedMovie', JSON.stringify(darkKnight));
+        window.location.href = 'movie.html';
+      }
+    });
+
+    // Remove loader after fonts settle
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        document.getElementById('loader').style.display = 'none';
+      }, 700);
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CineVault — Now Playing</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="player-page">
+
+  <!-- ══ PLAYER NAVBAR ══ -->
+  <nav class="player-navbar">
+    <button class="back-btn" id="back-btn">
+      <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="19,12 5,12"/>
+        <polyline points="12,5 5,12 12,19"/>
+      </svg>
+      Back
+    </button>
+    <span class="player-nav-title" id="nav-title">Now Playing</span>
+  </nav>
+
+  <!-- ══ PLAYER CONTAINER ══ -->
+  <div class="player-container">
+
+    <!-- Iframe Player -->
+    <div class="player-main">
+      <iframe
+        id="movie-iframe"
+        class="player-iframe"
+        src=""
+        allowfullscreen
+        allow="autoplay; fullscreen; encrypted-media"
+        scrolling="no"
+      ></iframe>
+    </div>
+
+    <!-- Movie Info -->
+    <div class="player-info">
+
+      <!-- Poster -->
+      <div class="player-poster-wrap">
+        <img id="movie-poster" class="player-poster" src="" alt="" />
+        <div class="player-poster-glow"></div>
+      </div>
+
+      <!-- Details -->
+      <div class="player-details">
+        <span class="player-category" id="movie-category">Genre</span>
+        <h1 class="player-title" id="movie-title">Loading…</h1>
+        <div class="player-divider"></div>
+        <p class="player-desc">
+          Sit back and enjoy the film. Use fullscreen for the best experience.
+          If playback doesn't start automatically, click the player above.
+        </p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="movies.js"></script>
+  <script>
+    // ── Read selected movie from localStorage ──
+    const stored = localStorage.getItem('selectedMovie');
+
+    if (!stored) {
+      // Nothing selected — go back home
+      window.location.href = 'index.html';
+    } else {
+      const movie = JSON.parse(stored);
+
+      // Populate player
+      document.getElementById('movie-iframe').src  = movie.link;
+      document.getElementById('movie-poster').src  = movie.poster;
+      document.getElementById('movie-poster').alt  = movie.name;
+      document.getElementById('movie-title').textContent    = movie.name;
+      document.getElementById('movie-category').textContent = movie.category;
+      document.getElementById('nav-title').textContent      = movie.name;
+      document.title = `CineVault — ${movie.name}`;
+    }
+
+    // ── Back button ──
+    document.getElementById('back-btn').addEventListener('click', () => {
+      window.history.length > 1 ? window.history.back() : window.location.href = 'index.html';
+    });
+  </script>
+
+</body>
+</html>
