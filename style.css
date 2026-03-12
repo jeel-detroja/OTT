@@ -332,6 +332,17 @@ body {
   transform: translateY(-2px);
 }
 
+/* ── SEARCH/FILTER ACTIVE STATE ── */
+body.search-active .hero,
+body.search-active #featured {
+  display: none !important;
+}
+
+body.search-active .main-content {
+  padding-top: 120px;
+  min-height: calc(100vh - 120px);
+}
+
 /* ── MAIN CONTENT ── */
 .main-content {
   padding: 0 48px;

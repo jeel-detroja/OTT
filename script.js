@@ -15,8 +15,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const searchInput = document.querySelector('.nav-search');
   if (searchInput) {
     searchInput.addEventListener('input', (e) => {
-      const query = e.target.value.trim().toLowerCase();
-      filterMovies(activeCategory, query);
+      searchQuery = e.target.value.trim();
+      filterMovies(activeCategory, searchQuery);
     });
   }
 
@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
         activeCategory = cat;
-        searchQuery = searchInput?.value.trim().toLowerCase() || '';
+        searchQuery = searchInput?.value.trim() || '';
         filterMovies(activeCategory, searchQuery);
       });
       filterContainer.appendChild(btn);
@@ -65,9 +65,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   /* ── Filter function ── */
   function filterMovies(category, query) {
+    const lowerQuery = query.toLowerCase();
     const filtered = movies.filter(m => {
       const matchCat = category === 'All' || m.category === category;
-      const matchQuery = !query || m.name.toLowerCase().includes(query);
+      const matchQuery = !lowerQuery || m.name.toLowerCase().includes(lowerQuery);
       return matchCat && matchQuery;
     });
 
@@ -75,14 +76,35 @@ document.addEventListener('DOMContentLoaded', () => {
       grid.innerHTML = '';
       if (filtered.length === 0) {
         grid.innerHTML = `<div class="no-results"><h3>No films found</h3><p>Try a different search or category.</p></div>`;
-        return;
+      } else {
+        renderMovies(filtered, grid);
       }
-      renderMovies(filtered, grid);
     }
 
-    // Update section count
-    const countEl = document.querySelector('.section-count');
-    if (countEl) countEl.textContent = `${filtered.length} titles`;
+    // Update section count and title for the All Films grid
+    const moviesSection = document.getElementById('movies');
+    if (moviesSection) {
+      const countEl = moviesSection.querySelector('.section-count');
+      if (countEl) countEl.textContent = `${filtered.length} titles`;
+
+      const titleEl = moviesSection.querySelector('.section-title');
+      if (titleEl) {
+        if (query) {
+          titleEl.textContent = `Search Results for "${query}"`;
+        } else {
+          titleEl.textContent = category === 'All' ? 'All Films' : `${category} Films`;
+        }
+      }
+    }
+
+    // Toggle search-active state to hide hero/featured
+    const isSearchActive = !!query || category !== 'All';
+    if (isSearchActive) {
+      document.body.classList.add('search-active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      document.body.classList.remove('search-active');
+    }
   }
 
   /* ── Create standard movie card ── */
