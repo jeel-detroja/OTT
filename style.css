@@ -334,7 +334,8 @@ body {
 
 /* ── SEARCH/FILTER ACTIVE STATE ── */
 body.search-active .hero,
-body.search-active #featured {
+body.search-active #featured,
+body.search-active #top10 {
   display: none !important;
 }
 
@@ -602,6 +603,118 @@ body.search-active .main-content {
 .featured-card .card-title {
   font-size: 20px;
   white-space: normal;
+}
+
+/* ── TOP 10 GRID & CARDS ── */
+.top10-grid {
+  display: flex;
+  gap: 16px;
+  padding-bottom: 24px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+}
+
+.top10-grid::-webkit-scrollbar { height: 6px; }
+.top10-grid::-webkit-scrollbar-track { background: var(--bg-void); }
+.top10-grid::-webkit-scrollbar-thumb { background: var(--gold-dim); border-radius: 3px; }
+.top10-grid::-webkit-scrollbar-thumb:hover { background: var(--gold); }
+
+.top10-card {
+  position: relative;
+  flex: 0 0 min-content;
+  display: flex;
+  align-items: flex-end;
+  cursor: pointer;
+  transition: all var(--transition);
+  animation: cardReveal 0.5s ease-out both;
+  scroll-snap-align: start;
+}
+
+.top10-card:hover {
+  transform: translateY(-8px);
+  z-index: 2;
+}
+
+.top10-card .rank-number {
+  font-family: var(--font-display);
+  font-size: 160px;
+  font-weight: 700;
+  line-height: 0.8;
+  color: var(--bg-void);
+  -webkit-text-stroke: 3px var(--text-muted);
+  z-index: 1;
+  transition: all var(--transition);
+  margin-right: -40px;
+  user-select: none;
+}
+
+.top10-card:hover .rank-number {
+  -webkit-text-stroke-color: var(--gold);
+  color: rgba(201, 168, 76, 0.2);
+}
+
+.top10-card .card-poster-wrap {
+  width: 150px;
+  height: 225px;
+  position: relative;
+  z-index: 2;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+  transition: all var(--transition);
+  padding-top: 0;
+}
+
+.top10-card .card-poster {
+  width: 100%; 
+  height: 100%; 
+  object-fit: cover;
+}
+
+.top10-card:hover .card-poster-wrap {
+  box-shadow: 0 20px 50px rgba(0,0,0,0.7), 0 0 0 1px var(--gold-dim);
+}
+
+.top10-card .card-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(7,8,10,0.95) 0%,
+    rgba(7,8,10,0.5) 40%,
+    transparent 70%
+  );
+  opacity: 0;
+  transition: opacity var(--transition);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.top10-card:hover .card-overlay { opacity: 1; }
+
+.top10-card .card-play-btn {
+  width: 48px; height: 48px;
+  border-radius: 50%;
+  background: var(--gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 20px var(--gold-glow);
+  transition: transform 0.2s ease;
+}
+
+.top10-card .card-play-btn:hover { transform: scale(1.1); }
+
+.top10-card .card-play-btn svg {
+  width: 20px; height: 20px;
+  fill: var(--bg-void);
+  margin-left: 3px;
+}
+
+@media (max-width: 768px) {
+  .top10-card .rank-number { font-size: 110px; margin-right: -25px; -webkit-text-stroke-width: 2px; }
+  .top10-card .card-poster-wrap { width: 110px; height: 165px; }
 }
 
 /* ── FOOTER ── */

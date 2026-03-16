@@ -63,6 +63,28 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  /* ── Render Top 10 strip ── */
+  const top10Grid = document.querySelector('.top10-grid');
+  if (top10Grid) {
+    const top10Names = [
+      "The Dark Knight",
+      "Inception",
+      "Interstellar",
+      "The Godfather",
+      "Avengers: Endgame",
+      "The Matrix",
+      "Gladiator",
+      "Titanic",
+      "Avatar",
+      "The Shawshank Redemption"
+    ];
+    const top10 = top10Names.map(name => movies.find(m => m.name === name)).filter(Boolean);
+    top10.forEach((movie, i) => {
+      const card = createTop10Card(movie, i + 1);
+      top10Grid.appendChild(card);
+    });
+  }
+
   /* ── Filter function ── */
   function filterMovies(category, query) {
     const lowerQuery = query.toLowerCase();
@@ -140,6 +162,26 @@ document.addEventListener('DOMContentLoaded', () => {
       <div class="card-info">
         <span class="card-category-badge">${movie.category}</span>
         <div class="card-title">${movie.name}</div>
+      </div>
+    `;
+     card.addEventListener('click', () => openMovie(movie));
+    return card;
+  }
+
+  /* ── Create top 10 card ── */
+  function createTop10Card(movie, rank) {
+    const card = document.createElement('div');
+    card.className = 'top10-card';
+    card.style.animationDelay = `${rank * 80}ms`;
+    card.innerHTML = `
+      <div class="rank-number">${rank}</div>
+      <div class="card-poster-wrap">
+        <img class="card-poster" src="${movie.poster}" alt="${movie.name}" loading="lazy" />
+        <div class="card-overlay">
+          <div class="card-play-btn">
+            <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
+          </div>
+        </div>
       </div>
     `;
     card.addEventListener('click', () => openMovie(movie));
