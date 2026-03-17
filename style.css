@@ -642,7 +642,7 @@ body.search-active .main-content {
   line-height: 0.8;
   color: var(--bg-void);
   -webkit-text-stroke: 3px var(--text-muted);
-  z-index: 1;
+  z-index: 3;
   transition: all var(--transition);
   margin-right: -40px;
   user-select: none;
